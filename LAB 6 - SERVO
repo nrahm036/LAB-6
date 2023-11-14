@@ -1,0 +1,27 @@
+def user_input():
+    while True:
+        try:
+            angle_degrees = float(input("Enter angle in degrees (0-180): "))
+            servo_duty_cycle = translate(angle)
+            print(f"Servo Angle: {angle} degrees, PWM Duty Cycle: {servo_duty_cycle}")
+            break
+        except ValueError:
+            print("Please enter a valid number.")
+            
+def translate(degrees):
+    # set the valid range and PWM duty cycle values for the servo
+    MIN_ANGLE_DEGREES = 0  # Minimum servo angle in degrees
+    MAX_ANGLE_DEGREES = 180  # Maximum servo angle in degrees
+    MIN_DUTY_CYCLE = 1000  # Minimum PWM duty cycle value for the servo
+    MAX_DUTY_CYCLE = 2000  # Maximum PWM duty cycle value for the servo
+
+    # Making sure that input angle is within the valid range
+    if degrees < MIN_ANGLE_DEGREES:
+        degrees = MIN_ANGLE_DEGREES
+    elif degrees > MAX_ANGLE_DEGREES:
+        degrees = MAX_ANGLE_DEGREES
+
+    # Calculation of PWM duty cycle value 
+    duty_cycle = MIN_DUTY_CYCLE + (degrees - MIN_ANGLE_DEGREES) * (MAX_DUTY_CYCLE - MIN_DUTY_CYCLE) / (MAX_ANGLE_DEGREES - MIN_ANGLE_DEGREES)
+
+    return int(duty_cycle)  # Return the PWM duty cycle as an integer
